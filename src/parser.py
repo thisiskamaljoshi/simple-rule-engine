@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
-from .operators import OPERATORS
+from operators import OPERATORS
 
 @dataclass
 class ParsedCondition:
