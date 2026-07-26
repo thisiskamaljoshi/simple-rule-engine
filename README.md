@@ -288,3 +288,318 @@ Implement the parser **without using `eval()` or any third-party parsing librari
 
 ---
 ---
+
+# Problem 4 — Support Multiple Conditions
+
+## Goal
+
+Extend the rule engine to support evaluating multiple conditions within a single rule.
+
+Instead of evaluating only one condition:
+
+```python
+"marks>=40"
+```
+
+your engine should be able to evaluate a list of conditions.
+
+---
+
+## Input
+
+```python
+facts = {
+    "fever": True,
+    "temperature": 39
+}
+
+rule = {
+    "if": [
+        "fever==True",
+        "temperature>38"
+    ],
+    "then": "High Fever"
+}
+```
+
+---
+
+## Expected Output
+
+```text
+High Fever
+```
+
+---
+
+## Requirements
+
+Your engine should:
+
+1. Evaluate every condition in the `if` list.
+2. Return `True` only if **all** conditions evaluate to `True`.
+3. Fire the rule by printing the `then` value when every condition passes.
+
+---
+
+## Example
+
+### Input
+
+```python
+facts = {
+    "fever": True,
+    "temperature": 39
+}
+
+rule = {
+    "if": [
+        "fever==True",
+        "temperature>38"
+    ],
+    "then": "High Fever"
+}
+```
+
+### Output
+
+```text
+High Fever
+```
+
+---
+
+### Another Example
+
+```python
+facts = {
+    "fever": True,
+    "temperature": 37
+}
+
+rule = {
+    "if": [
+        "fever==True",
+        "temperature>38"
+    ],
+    "then": "High Fever"
+}
+```
+
+### Output
+
+```text
+Rule not satisfied
+```
+
+---
+
+# Problem 5 — Support Logical Operators
+
+## Goal
+
+Extend the parser to support logical operators.
+
+---
+
+## Supported Operators
+
+- `AND`
+- `OR`
+
+---
+
+## Examples
+
+```text
+fever==True AND cough==True
+```
+
+```text
+age>=18 OR parentConsent==True
+```
+
+---
+
+## Example
+
+### Input
+
+```python
+facts = {
+    "fever": True,
+    "cough": True
+}
+
+condition = "fever==True AND cough==True"
+```
+
+### Output
+
+```text
+True
+```
+
+---
+
+# Problem 6 — Support Parentheses
+
+## Goal
+
+Support grouping expressions using parentheses.
+
+---
+
+## Example
+
+```text
+(age>=18 AND citizen==True) OR visa==True
+```
+
+---
+
+## Example
+
+### Input
+
+```python
+facts = {
+    "age": 17,
+    "citizen": False,
+    "visa": True
+}
+
+condition = "(age>=18 AND citizen==True) OR visa==True"
+```
+
+### Output
+
+```text
+True
+```
+
+---
+
+# Problem 7 — Support Nested Expressions
+
+## Goal
+
+Support nested logical expressions containing multiple levels of parentheses.
+
+---
+
+## Example
+
+```text
+(
+    fever==True
+    AND
+    (
+        cough==True
+        OR soreThroat==True
+    )
+)
+```
+
+---
+
+## Example
+
+### Input
+
+```python
+facts = {
+    "fever": True,
+    "cough": False,
+    "soreThroat": True
+}
+```
+
+Condition
+
+```text
+(
+    fever==True
+    AND
+    (
+        cough==True
+        OR soreThroat==True
+    )
+)
+```
+
+### Output
+
+```text
+True
+```
+
+---
+
+# Suggested Function
+
+```python
+def evaluate(condition: str, facts: dict) -> bool:
+    pass
+```
+
+---
+
+## Example
+
+```python
+evaluate("marks>=40", facts)
+```
+
+Returns
+
+```text
+True
+```
+
+---
+
+# Final Goal
+
+Eventually your rule engine should support complete expert-system rules such as:
+
+```python
+facts = {
+    "fever": True,
+    "temperature": 39,
+    "cough": True,
+    "age": 25
+}
+
+rules = [
+    {
+        "if": [
+            "fever==True",
+            "temperature>38",
+            "cough==True"
+        ],
+        "then": "Influenza"
+    }
+]
+```
+
+Your engine should automatically print
+
+```text
+Influenza
+```
+
+without using any hardcoded `if` statements.
+
+---
+
+# Recommended Learning Progression
+
+Build the project iteratively.
+
+7. Evaluate multiple conditions using `all()`.
+8. Support logical operators (`AND`, `OR`).
+9. Support parentheses.
+10. Build an Abstract Syntax Tree (AST) to evaluate nested expressions.
+
+This progression closely mirrors how many interpreters, compilers, and rule engines evolve. They begin by parsing simple expressions and gradually expand the grammar to support increasingly sophisticated language features.
