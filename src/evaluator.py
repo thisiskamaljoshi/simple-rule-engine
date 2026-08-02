@@ -1,4 +1,5 @@
 from parser import parse
+from logical_parser import parseLogicalCondition
 from typing import Any
 
 # evaluate()
@@ -64,6 +65,14 @@ def compare_values(user_value:Any,curr_op:str,check_value:Any) -> bool:
     elif curr_op == ">":
         return user_value > check_value 
 
+def compare_logical_expression(left_condition:Any,curr_op:str,right_condition:Any,facts) -> bool:
+    left_computed:bool = evaluate(left_condition,facts)
+    right_computed:bool = evaluate(right_condition,facts)
+    if curr_op == "AND":
+        return left_computed and right_computed
+    elif curr_op == "OR":
+        return left_computed or right_computed
+
 # evaluate("marks>=40", facts)
 
 def evaluate(condition:str,facts:dict) -> bool:
@@ -71,4 +80,10 @@ def evaluate(condition:str,facts:dict) -> bool:
     user_value = lookup_fact(facts,parsed.variable)
     check_value = convert_user_value(user_value , parsed.value) 
     return compare_values(user_value,parsed.operator,check_value)
+
+def evaluate_logical_expression(condition:str,facts:dict) -> bool:
+    parsed_logical_exp = parseLogicalCondition(condition)
+    operator = parsed_logical_exp.operator
+    value = compare_logical_expression(parsed_logical_exp.left_expression,operator,parsed_logical_exp.right_expression,facts)
+    return value
     
