@@ -442,7 +442,7 @@ True
 
 ---
 
-# Problem 6 — Support Parentheses
+# Problem 6 (Yet to implement) — Support Parentheses
 
 ## Goal
 
