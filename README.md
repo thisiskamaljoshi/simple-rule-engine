@@ -603,3 +603,10 @@ Build the project iteratively.
 10. Build an Abstract Syntax Tree (AST) to evaluate nested expressions.
 
 This progression closely mirrors how many interpreters, compilers, and rule engines evolve. They begin by parsing simple expressions and gradually expand the grammar to support increasingly sophisticated language features.
+
+---
+
+## License & Copyright
+
+- **Code:** Licensed under the [MIT License](LICENSE).
+- **Architecture Diagrams & Media:** Copyright © 2026 Kamal Joshi. All rights reserved.
