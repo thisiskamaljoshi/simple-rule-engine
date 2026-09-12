@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SimpleRuleEngine — Before vs After</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #090d16;
+      font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, Menlo, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .instructions {
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .instructions kbd {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    /* Outer Canvas with Carbon-style Vibrant Gradient */
+    .carbon-canvas {
+      background: linear-gradient(135deg, #4338ca 0%, #6d28d9 45%, #db2777 100%);
+      padding: 50px;
+      border-radius: 24px;
+      box-shadow: 0 35px 85px rgba(0, 0, 0, 0.65);
+      max-width: 1250px;
+      width: 100%;
+    }
+
+    /* Window Container */
+    .carbon-window {
+      background: #12141d;
+      border-radius: 14px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    /* Window Header (macOS style) */
+    .window-header {
+      background: #181a24;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .mac-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .window-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #8b95b5;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    /* 2-Column Side-by-Side Split */
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .code-column {
+      padding: 26px 30px;
+      display: flex;
+      flex-direction: column;
+    }
+    .code-column:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(239, 68, 68, 0.025);
+    }
+    .code-column:last-child {
+      background: rgba(16, 185, 129, 0.025);
+    }
+
+    /* Column Header Badges */
+    .column-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .badge-bad {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .badge-good {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* Code Typography */
+    pre {
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.68;
+      color: #e2e8f0;
+      overflow-x: auto;
+      flex-grow: 1;
+    }
+
+    /* Syntax Highlighting */
+    .comment { color: #64748b; font-style: italic; }
+    .keyword { color: #c084fc; font-weight: 600; }
+    .builtin { color: #38bdf8; }
+    .string { color: #86efac; }
+    .number { color: #f59e0b; }
+    .func { color: #60a5fa; }
+    .danger { color: #ef4444; font-weight: bold; }
+    .warn { color: #fbbf24; }
+
+    /* Footer Feature Banner */
+    .card-footer {
+      background: #0f1118;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+    }
+    .pills {
+      display: flex;
+      gap: 12px;
+    }
+    .pill {
+      background: #191c28;
+      color: #94a3b8;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+    }
+    .pill b { color: #cbd5e1; }
+    .branding {
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="instructions">
+    📸 <b>Capture Card:</b> Open this file in your browser, press <kbd>Win + Shift + S</kbd> (Windows) or <kbd>Cmd + Shift + 4</kbd> (Mac) to capture the card below.
+  </div>
+
+  <div class="carbon-canvas">
+    <div class="carbon-window">
+      <!-- Title Bar -->
+      <div class="window-header">
+        <div class="mac-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <div class="window-title">rule_engine_comparison.py</div>
+      </div>
+
+      <!-- Side-by-Side Content -->
+      <div class="code-grid">
+        <!-- LEFT: Hardcoded & Brittle -->
+        <div class="code-column">
+          <div class="column-badge badge-bad">
+            ✕ Hardcoded & Brittle (Imperative Python)
+          </div>
+          <pre><code><span class="comment"># Hardcoded diagnosis logic:</span>
+<span class="comment"># Requires code rewrite & redeployment for any rule change</span>
+<span class="keyword">def</span> <span class="func">diagnose_patient</span>(facts):
+    <span class="keyword">if</span> facts[<span class="string">"fever"</span>] == <span class="keyword">True</span> <span class="keyword">and</span> facts[<span class="string">"temperature"</span>] >= <span class="number">38</span>:
+        <span class="keyword">if</span> facts.<span class="func">get</span>(<span class="string">"body_weakness"</span>) <span class="keyword">and</span> <span class="keyword">not</span> facts.<span class="func">get</span>(<span class="string">"spots"</span>):
+            <span class="keyword">return</span> <span class="string">"Viral Fever"</span>
+    <span class="keyword">return</span> <span class="string">"Unknown"</span>
+
+<span class="comment"># Or dangerous dynamic eval():</span>
+condition = <span class="string">"facts['temperature'] >= 38"</span>
+result = <span class="danger">eval</span>(condition)  <span class="comment"># 🚨 Security vulnerability!</span></code></pre>
+        </div>
+
+        <!-- RIGHT: Declarative SimpleRuleEngine -->
+        <div class="code-column">
+          <div class="column-badge badge-good">
+            ✓ Declarative Rule Engine (SimpleRuleEngine)
+          </div>
+          <pre><code><span class="keyword">from</span> rule <span class="keyword">import</span> <span class="builtin">Rule</span>
+<span class="keyword">from</span> rule_engine <span class="keyword">import</span> <span class="func">evaluate_logical_rule</span>, <span class="func">fire_rule</span>
+
+<span class="comment"># 1. Declarative Business / Medical Rules</span>
+rules = [
+    <span class="builtin">Rule</span>(
+        conditions=[
+            <span class="string">"fever==True AND temperature>=38"</span>,
+            <span class="string">"body_weakness==True AND spots==False"</span>
+        ],
+        conclusion=<span class="string">"Viral Fever"</span>
+    )
+]
+
+<span class="comment"># 2. Dynamic Working Memory (Facts)</span>
+patient_facts = {
+    <span class="string">"fever"</span>: <span class="keyword">True</span>,
+    <span class="string">"temperature"</span>: <span class="number">39</span>,
+    <span class="string">"body_weakness"</span>: <span class="keyword">True</span>,
+    <span class="string">"spots"</span>: <span class="keyword">False</span>
+}
+
+<span class="comment"># 3. Safe, zero-eval condition parsing & rule firing</span>
+<span class="keyword">for</span> rule <span class="keyword">in</span> rules:
+    matched = <span class="func">evaluate_logical_rule</span>(rule, patient_facts)
+    <span class="func">fire_rule</span>(rule, matched)
+<span class="comment"># Output: -> "Viral Fever"</span></code></pre>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="card-footer">
+        <div class="pills">
+          <span class="pill">🔒 <b>Zero eval()</b> (Injection-safe)</span>
+          <span class="pill">⚡ <b>Dynamic Fact Lookup</b></span>
+          <span class="pill">📦 <b>Zero Dependencies</b></span>
+        </div>
+        <div class="branding">SimpleRuleEngine</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
