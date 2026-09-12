@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 1260" width="100%" height="100%" style="background-color: #080c15; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#141c2e" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#080c15" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="nodeShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#a855f7"/>
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
+    </marker>
+
+    <style>
+      .subgraph-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+      .node-title { font-size: 13.5px; font-weight: 600; fill: #f8fafc; }
+      .node-desc { font-size: 12px; fill: #94a3b8; }
+      .code-pill { font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 11.5px; fill: #93c5fd; }
+      .flow-label { font-size: 11px; font-weight: 600; fill: #64748b; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="100%" height="100%" fill="url(#bgGlow)"/>
+
+  <!-- Subtle Canvas Border -->
+  <rect x="15" y="15" width="890" height="1230" rx="20" fill="none" stroke="rgba(255, 255, 255, 0.06)" stroke-width="1"/>
+
+  <!-- ================= HEADER ================= -->
+  <g transform="translate(460, 48)" text-anchor="middle">
+    <text font-size="20" font-weight="700" fill="#ffffff" letter-spacing="-0.3">SimpleRuleEngine — Execution Flowchart</text>
+    <text y="22" font-size="12.5" fill="#64748b">Flowchart TD • Zero-dependency &amp; Zero-eval Architecture</text>
+  </g>
+
+  <!-- ================= SUBGRAPH 1: INPUT LAYER ================= -->
+  <!-- Container Box -->
+  <rect x="40" y="85" width="840" height="155" rx="14" fill="#0f1523" stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1.5" filter="url(#cardShadow)"/>
+  
+  <!-- Subgraph Header Badge -->
+  <rect x="56" y="98" width="95" height="22" rx="5" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-opacity="0.4"/>
+  <text x="103.5" y="113" text-anchor="middle" class="subgraph-title" fill="#60a5fa">Input Layer</text>
+
+  <!-- Node A: Condition String -->
+  <g transform="translate(60, 132)">
+    <rect width="365" height="92" rx="10" fill="#151d30" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="20" cy="24" r="5" fill="#3b82f6" fill-opacity="0.8"/>
+    <text x="34" y="28" class="node-title">Condition String</text>
+    <rect x="16" y="44" width="333" height="34" rx="6" fill="#0c111d" stroke="rgba(255,255,255,0.06)"/>
+    <text x="26" y="66" class="code-pill">'fever==True AND temperature&gt;=38'</text>
+  </g>
+
+  <!-- Node B: Working Memory (Facts) -->
+  <g id="nodeB" transform="translate(495, 132)">
+    <rect width="365" height="92" rx="10" fill="#151d30" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="20" cy="24" r="5" fill="#3b82f6" fill-opacity="0.8"/>
+    <text x="34" y="28" class="node-title">Working Memory (Facts)</text>
+    <rect x="16" y="44" width="333" height="34" rx="6" fill="#0c111d" stroke="rgba(255,255,255,0.06)"/>
+    <text x="26" y="66" class="code-pill">{'fever': True, 'temperature': 39}</text>
+  </g>
+
+  <!-- ================= SUBGRAPH 2: CONDITION PARSER ================= -->
+  <!-- Container Box (Covers C & D on Left Stream) -->
+  <rect x="40" y="275" width="405" height="230" rx="14" fill="#131226" stroke="#a855f7" stroke-opacity="0.3" stroke-width="1.5" filter="url(#cardShadow)"/>
+  
+  <!-- Subgraph Header Badge -->
+  <rect x="56" y="288" width="132" height="22" rx="5" fill="#a855f7" fill-opacity="0.15" stroke="#a855f7" stroke-opacity="0.4"/>
+  <text x="122" y="303" text-anchor="middle" class="subgraph-title" fill="#c084fc">Condition Parser</text>
+
+  <!-- Node C: Logical Parser -->
+  <g transform="translate(60, 322)">
+    <rect width="365" height="72" rx="10" fill="#191636" stroke="#a855f7" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="20" cy="24" r="5" fill="#a855f7" fill-opacity="0.8"/>
+    <text x="34" y="28" class="node-title">Logical Parser</text>
+    <text x="34" y="52" class="node-desc">(splits by AND/OR compound expressions)</text>
+  </g>
+
+  <!-- Node D: Comparison Parser -->
+  <g transform="translate(60, 420)">
+    <rect width="365" height="72" rx="10" fill="#191636" stroke="#a855f7" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="20" cy="24" r="5" fill="#a855f7" fill-opacity="0.8"/>
+    <text x="34" y="28" class="node-title">Comparison Parser</text>
+    <text x="34" y="52" class="node-desc">(identifies variable, operator, value)</text>
+  </g>
+
+  <!-- ================= FACTS DIRECT STATE CHANNEL (Right Side) ================= -->
+  <g transform="translate(495, 275)">
+    <rect width="365" height="230" rx="14" fill="#0d1424" fill-opacity="0.4" stroke="#3b82f6" stroke-opacity="0.12" stroke-dasharray="4 4"/>
+    <text x="182.5" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="#60a5fa" fill-opacity="0.8">Working Memory State Feed</text>
+    <text x="182.5" y="125" text-anchor="middle" font-size="11" fill="#64748b">Raw facts bypass parser (no tokenization needed)</text>
+  </g>
+
+  <!-- ================= SUBGRAPH 3: RUNTIME EVALUATOR ================= -->
+  <!-- Container Box -->
+  <rect x="40" y="540" width="840" height="340" rx="14" fill="#0b1724" stroke="#06b6d4" stroke-opacity="0.3" stroke-width="1.5" filter="url(#cardShadow)"/>
+  
+  <!-- Subgraph Header Badge -->
+  <rect x="56" y="553" width="225" height="22" rx="5" fill="#06b6d4" fill-opacity="0.15" stroke="#06b6d4" stroke-opacity="0.4"/>
+  <text x="168.5" y="568" text-anchor="middle" class="subgraph-title" fill="#22d3ee">Runtime Evaluator (Zero eval)</text>
+
+  <!-- Node E: Fact Lookup -->
+  <g transform="translate(180, 592)">
+    <rect width="560" height="74" rx="10" fill="#102334" stroke="#06b6d4" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="24" cy="24" r="5" fill="#06b6d4" fill-opacity="0.9"/>
+    <text x="40" y="28" class="node-title">Fact Lookup</text>
+    <rect x="40" y="38" width="270" height="24" rx="4" fill="#07131e" stroke="rgba(255,255,255,0.05)"/>
+    <text x="50" y="54" class="code-pill">retrieve 'temperature' = 39</text>
+  </g>
+
+  <!-- Node F: Dynamic Type Coercion -->
+  <g transform="translate(180, 688)">
+    <rect width="560" height="74" rx="10" fill="#102334" stroke="#06b6d4" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="24" cy="24" r="5" fill="#06b6d4" fill-opacity="0.9"/>
+    <text x="40" y="28" class="node-title">Dynamic Type Coercion</text>
+    <rect x="40" y="38" width="285" height="24" rx="4" fill="#07131e" stroke="rgba(255,255,255,0.05)"/>
+    <text x="50" y="54" class="code-pill">converts string '38' to int 38</text>
+  </g>
+
+  <!-- Node G: Operator Execution -->
+  <g transform="translate(180, 784)">
+    <rect width="560" height="74" rx="10" fill="#102334" stroke="#06b6d4" stroke-opacity="0.4" stroke-width="1.2" filter="url(#nodeShadow)"/>
+    <circle cx="24" cy="24" r="5" fill="#06b6d4" fill-opacity="0.9"/>
+    <text x="40" y="28" class="node-title">Operator Execution</text>
+    <rect x="40" y="38" width="210" height="24" rx="4" fill="#07131e" stroke="rgba(255,255,255,0.05)"/>
+    <text x="50" y="54" class="code-pill">39 &gt;= 38 -&gt; True</text>
+  </g>
+
+  <!-- ================= SUBGRAPH 4: INFERENCE (RULE ENGINE) ================= -->
+  <!-- Container Box -->
+  <rect x="40" y="915" width="840" height="280" rx="14" fill="#0b1a1a" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.5" filter="url(#cardShadow)"/>
+  
+  <!-- Subgraph Header Badge -->
+  <rect x="56" y="928" width="105" height="22" rx="5" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4"/>
+  <text x="108.5" y="943" text-anchor="middle" class="subgraph-title" fill="#34d399">Rule Engine</text>
+
+  <!-- Node H: Decision Diamond (All Conditions Satisfied?) -->
+  <g transform="translate(460, 995)">
+    <polygon points="0,-36 125,0 0,36 -125,0" fill="#172e26" stroke="#10b981" stroke-width="1.8" filter="url(#nodeShadow)"/>
+    <text y="-6" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">All Conditions</text>
+    <text y="12" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">Satisfied?</text>
+  </g>
+
+  <!-- Node I: Fire Conclusion -->
+  <g transform="translate(290, 1098)">
+    <rect width="340" height="74" rx="10" fill="#133325" stroke="#10b981" stroke-width="1.5" filter="url(#nodeShadow)"/>
+    <circle cx="24" cy="24" r="5" fill="#10b981" fill-opacity="1"/>
+    <text x="40" y="28" class="node-title">Fire Conclusion:</text>
+    <rect x="40" y="38" width="135" height="25" rx="4" fill="#082016" stroke="#10b981" stroke-opacity="0.4"/>
+    <text x="50" y="55" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="600" fill="#34d399">'Viral Fever'</text>
+  </g>
+
+  <!-- ================= CONNECTING EDGES & PATHS ================= -->
+
+  <!-- Edge: A to C (Top Left to Parser) -->
+  <path d="M 242.5 224 L 242.5 320" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-purple)"/>
+
+  <!-- Edge: C to D (Logical to Comparison) -->
+  <path d="M 242.5 394 L 242.5 418" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-purple)"/>
+
+  <!-- Edge: D to E (Comparison to Evaluator Fact Lookup) -->
+  <path d="M 242.5 492 C 242.5 540, 320 550, 320 590" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-cyan)"/>
+
+  <!-- Edge: B to E (Working Memory to Evaluator Fact Lookup) -->
+  <path d="M 677.5 224 L 677.5 490 C 677.5 540, 600 550, 600 590" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+
+  <!-- Edge: E to F (Fact Lookup to Dynamic Type Coercion) -->
+  <path d="M 460 666 L 460 686" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-cyan)"/>
+
+  <!-- Edge: F to G (Dynamic Type Coercion to Operator Execution) -->
+  <path d="M 460 762 L 460 782" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-cyan)"/>
+
+  <!-- Edge: G to H (Operator Execution to Decision Diamond) -->
+  <path d="M 460 858 L 460 955" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+
+  <!-- Edge: H to I (Decision Yes to Fire Conclusion) -->
+  <path d="M 460 1031 L 460 1096" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  
+  <!-- 'Yes' Decision Label Badge -->
+  <g transform="translate(470, 1052)">
+    <rect width="36" height="20" rx="5" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-opacity="0.6"/>
+    <text x="18" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#34d399">Yes</text>
+  </g>
+
+</svg>

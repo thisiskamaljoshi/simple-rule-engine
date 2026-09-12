@@ -1,0 +1,30 @@
+flowchart TD
+        subgraph Input["Input Layer"]
+            A["Condition String:\n'fever==True AND temperature>=38'"]
+            B["Working Memory (Facts):\n{'fever': True, 'temperature': 39}"]
+        end
+    
+        subgraph Parsing["Condition Parser"]
+            C["Logical Parser\n(splits by AND/OR)"]
+            D["Comparison Parser\n(identifies variable, operator, value)"]
+        end
+    
+        subgraph Evaluation["Runtime Evaluator (Zero eval)"]
+            E["Fact Lookup\n(retrieve 'temperature' = 39)"]
+            F["Dynamic Type Coercion\n(converts string '38' to int 38)"]
+            G["Operator Execution\n(39 >= 38 -> True)"]
+        end
+    
+        subgraph Inference["Rule Engine"]
+            H{"All Conditions\nSatisfied?"}
+            I["Fire Conclusion:\n'Viral Fever'"]
+        end
+    
+        A --> C
+        C --> D
+        D --> E
+        B --> E
+        E --> F
+        F --> G
+        G --> H
+        H -- Yes --> I                                                                                                                                    

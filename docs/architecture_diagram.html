@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SimpleRuleEngine Architecture Diagram</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080b12;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'SF Pro Display', sans-serif;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .instructions {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .instructions kbd {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    .canvas {
+      background: #0f131e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      width: 100%;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 100px rgba(99, 102, 241, 0.08);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .header p {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* 4 Columns Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      position: relative;
+    }
+
+    .layer-card {
+      background: #151926;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .layer-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      align-self: flex-start;
+    }
+
+    .badge-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .layer-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .component-box {
+      background: #1b2132;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 13px;
+    }
+    .component-box b {
+      color: #f8fafc;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    .component-box code {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+      font-size: 11.5px;
+      color: #93c5fd;
+      display: block;
+      background: #111522;
+      padding: 6px 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      word-break: break-all;
+    }
+
+    .arrow {
+      text-align: center;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* Footer Stats */
+    .footer-bar {
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .pills {
+      display: flex;
+      gap: 12px;
+    }
+    .pill {
+      background: #161b2a;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .pill b { color: #f8fafc; }
+  </style>
+</head>
+<body>
+
+  <div class="instructions">
+    📸 <b>Capture Architecture:</b> Press <kbd>Win + Shift + S</kbd> to take a high-res screenshot of this diagram for LinkedIn!
+  </div>
+
+  <div class="canvas">
+    <div class="header">
+      <h1>SimpleRuleEngine — System Architecture</h1>
+      <p>Zero-dependency, Zero-eval Condition Parser & Inference Engine</p>
+    </div>
+
+    <div class="grid">
+      <!-- 1. Input Layer -->
+      <div class="layer-card">
+        <span class="layer-badge badge-blue">Layer 1</span>
+        <h3>Input & Memory</h3>
+
+        <div class="component-box">
+          <b>Working Memory (Facts)</b>
+          Runtime state dictionary
+          <code>facts = {"fever": True, "temperature": 39}</code>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="component-box">
+          <b>Knowledge Base (Rules)</b>
+          Declarative rule entities
+          <code>Rule(conditions=[...], conclusion="Viral Fever")</code>
+        </div>
+      </div>
+
+      <!-- 2. Parser Subsystem -->
+      <div class="layer-card">
+        <span class="layer-badge badge-purple">Layer 2</span>
+        <h3>Condition Parser</h3>
+
+        <div class="component-box">
+          <b>logical_parser.py</b>
+          Identifies operators & splits:
+          <code>"fever==True AND temp>=38" → [left, op, right]</code>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="component-box">
+          <b>parser.py</b>
+          Extracts single comparison:
+          <code>temp (var) | >= (op) | 38 (val)</code>
+        </div>
+      </div>
+
+      <!-- 3. Safe Evaluator Core -->
+      <div class="layer-card">
+        <span class="layer-badge badge-cyan">Layer 3</span>
+        <h3>Type-Safe Evaluator</h3>
+
+        <div class="component-box">
+          <b>lookup_fact()</b>
+          Fetches state from memory:
+          <code>facts["temperature"] → 39</code>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="component-box">
+          <b>convert_user_value()</b>
+          Dynamic type coercion:
+          <code>str "38" → int 38</code>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="component-box">
+          <b>compare_values()</b>
+          Safe operator execution:
+          <code>39 >= 38 → True (Zero eval!)</code>
+        </div>
+      </div>
+
+      <!-- 4. Inference Engine -->
+      <div class="layer-card">
+        <span class="layer-badge badge-green">Layer 4</span>
+        <h3>Inference Engine</h3>
+
+        <div class="component-box">
+          <b>evaluate_logical_rule()</b>
+          Evaluates all conditions:
+          <code>all([True, True]) → True</code>
+        </div>
+
+        <div class="arrow">↓</div>
+
+        <div class="component-box">
+          <b>fire_rule()</b>
+          Fires conclusion on match:
+          <code>Print: "Viral Fever"</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div class="pills">
+        <span class="pill">🔒 <b>Security:</b> 100% Injection Safe</span>
+        <span class="pill">⚡ <b>Performance:</b> In-memory lookup</span>
+        <span class="pill">📦 <b>Footprint:</b> Pure Python standard library</span>
+      </div>
+      <div>Designed for SimpleRuleEngine</div>
+    </div>
+  </div>
+
+</body>
+</html>
